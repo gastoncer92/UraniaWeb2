@@ -1,0 +1,59 @@
+﻿@model UraniaWeb.Models.Article
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Article</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdAticle" />
+            <div class="form-group">
+                <label asp-for="TitleArticle" class="control-label"></label>
+                <input asp-for="TitleArticle" class="form-control" />
+                <span asp-validation-for="TitleArticle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DescritionArticle" class="control-label"></label>
+                <input asp-for="DescritionArticle" class="form-control" />
+                <span asp-validation-for="DescritionArticle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateCreation" class="control-label"></label>
+                <input asp-for="DateCreation" class="form-control" />
+                <span asp-validation-for="DateCreation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlImagen1" class="control-label"></label>
+                <input asp-for="UrlImagen1" class="form-control" />
+                <span asp-validation-for="UrlImagen1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlImagen2" class="control-label"></label>
+                <input asp-for="UrlImagen2" class="form-control" />
+                <span asp-validation-for="UrlImagen2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UrlSound1" class="control-label"></label>
+                <input asp-for="UrlSound1" class="form-control" />
+                <span asp-validation-for="UrlSound1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,54 @@
+﻿@model UraniaWeb.Models.Article
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TitleArticle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TitleArticle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DescritionArticle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DescritionArticle)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateCreation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateCreation)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UrlImagen1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UrlImagen1)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UrlImagen2)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UrlImagen2)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UrlSound1)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UrlSound1)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdAticle">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

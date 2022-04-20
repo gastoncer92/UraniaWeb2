@@ -1,0 +1,65 @@
+﻿@model IEnumerable<UraniaWeb.Models.Article>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TitleArticle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescritionArticle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrlImagen1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrlImagen2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrlSound1)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TitleArticle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DescritionArticle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlImagen1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlImagen2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlSound1)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdAticle">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdAticle">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdAticle">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
