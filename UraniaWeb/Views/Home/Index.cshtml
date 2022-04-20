@@ -4,37 +4,12 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcodddddddme</h1>
+    <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
 <!--ARTICULOS-->
-@if (Model == null)
+@foreach (var hola in Model.ListaDeArticulos)
 {
-    <hr />
-    <div class="row">
-        <p>No existen artículos</p>
-    </div>
-}
-else
-{
-    @if (Model.ListaDeArticulos.Count() > 0)
-    {
-        <hr />
-        <div class="row">
-            @foreach(var item in Model.ListaDeArticulos.OrderByDescending(o => o.IdAticle))
-            {
-                <div class="tarjeta">
-                <div class="card">
-                    <img src="@item.UrlImagen1" class="img-thumbnail" style="width:100%" />
-                    <div class="card-body">
-                        <h5 class="text-center">@item.TitleArticle</h5>
-                        <p>@item.DateCreation</p>
-                        <a asp-action="Details" target="_blank" class="btn btn-success" style="border-radius:2px" asp-route-id="@item.IdAticle">Más información</a>
-                    </div>
-                </div>
-            </div>
-            }
-        </div>
-    }
+    <p>@hola.TitleArticle</p>
 }
