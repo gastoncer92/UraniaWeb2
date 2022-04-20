@@ -134,7 +134,7 @@ namespace UraniaWeb.Controllers
             }
             if (guardarCambiosError.GetValueOrDefault())
             {
-                ViewData["MessageError"] = "Error en la eliminacion del registro";
+                ViewData["MensajeError"] = "Error en la eliminacion del registro";
             }
 
             return View(admin);
@@ -159,7 +159,7 @@ namespace UraniaWeb.Controllers
             }
             catch (DbUpdateException)
             {
-                return RedirectToAction(nameof(Delete), new(id = id, guardarCambiosError = true));
+                return RedirectToAction(nameof(Delete), new { id = id, guardarCambiosError = true }  );
             }
         }
 

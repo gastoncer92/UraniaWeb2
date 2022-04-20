@@ -57,6 +57,7 @@ namespace UraniaWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                article.DateCreation = DateTime.Now;
                 _context.Add(article);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -85,6 +86,7 @@ namespace UraniaWeb.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Edit(int id, [Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article article)
         {
             if (id != article.IdAticle)

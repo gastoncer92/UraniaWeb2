@@ -13,33 +13,28 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TitleArticle" class="control-label"></label>
+                <label asp-for="TitleArticle" class="control-label">Titulo de artículo</label>
                 <input asp-for="TitleArticle" class="form-control" />
                 <span asp-validation-for="TitleArticle" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DescritionArticle" class="control-label"></label>
-                <input asp-for="DescritionArticle" class="form-control" />
+                <label asp-for="DescritionArticle" class="control-label">Descripcion</label>
+                <textarea asp-for="DescritionArticle" class="form-control" style="height:300px;" placeholder="Ingrese descripcion..."></textarea>
                 <span asp-validation-for="DescritionArticle" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateCreation" class="control-label"></label>
-                <input asp-for="DateCreation" class="form-control" />
-                <span asp-validation-for="DateCreation" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UrlImagen1" class="control-label"></label>
-                <input asp-for="UrlImagen1" class="form-control" />
+                <label asp-for="UrlImagen1" class="control-label">Imagen</label>
+                <input asp-for="UrlImagen1" type="file" accept="image/png,image/jpeg" class="form-control" />
                 <span asp-validation-for="UrlImagen1" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UrlImagen2" class="control-label"></label>
-                <input asp-for="UrlImagen2" class="form-control" />
+                <label asp-for="UrlImagen2" class="control-label">Imagen 2</label>
+                <input asp-for="UrlImagen2" type="file" accept="image/png,image/jpeg" class="form-control" />
                 <span asp-validation-for="UrlImagen2" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UrlSound1" class="control-label"></label>
-                <input asp-for="UrlSound1" class="form-control" />
+                <label asp-for="UrlSound1" class="control-label">Audio</label>
+                <input asp-for="UrlSound1" type="file" accept="audio/mpeg,audio/mp3,audio/ogg" class="form-control" />
                 <span asp-validation-for="UrlSound1" class="text-danger"></span>
             </div>
             <div class="form-group">
