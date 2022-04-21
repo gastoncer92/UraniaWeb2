@@ -1,4 +1,6 @@
-﻿@model UraniaWeb.Models.ViewModels.HomeVM
+﻿@model UraniaWeb.Models.Article
+
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -9,7 +11,3 @@
 </div>
 
 <!--ARTICULOS-->
-@foreach (var hola in Model.ListaDeArticulos)
-{
-    <p>@hola.TitleArticle</p>
-}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace UraniaWeb.Models
@@ -24,4 +25,5 @@ namespace UraniaWeb.Models
         [DisplayFormat(NullDisplayText = "")]
         public string UrlSound1 { get; set; }
     }
+
 }
