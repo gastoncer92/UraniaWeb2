@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UraniaWeb.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+
 
 namespace UraniaWeb.Controllers
 {
@@ -13,9 +14,13 @@ namespace UraniaWeb.Controllers
     {
         private readonly UraniaWebDbContext _context;
 
-        public ArticlesController(UraniaWebDbContext context)
+        private readonly IWebHostEnvironment _hostingEnvironment;
+
+        public ArticlesController(UraniaWebDbContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // GET: Articles
@@ -48,22 +53,21 @@ namespace UraniaWeb.Controllers
             return View();
         }
 
-        // POST: Articles/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article article)
         {
             if (ModelState.IsValid)
             {
-                article.DateCreation = DateTime.Now;
                 _context.Add(article);
+                article.DateCreation = DateTime.Now;
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(article);
         }
+
 
         // GET: Articles/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -81,29 +85,32 @@ namespace UraniaWeb.Controllers
             return View(article);
         }
 
-        // POST: Articles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
-        public async Task<IActionResult> Edit(int id, [Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article article)
+
+        public async Task<IActionResult> Edit(int id, [Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article articleA)
         {
-            if (id != article.IdAticle)
+            if (id != articleA.IdAticle)
             {
                 return NotFound();
+            }
+
+            if (articleA is null)
+            {
+                throw new ArgumentNullException(nameof(articleA));
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(article);
+                    _context.Update(articleA);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArticleExists(article.IdAticle))
+                    if (!ArticleExists(articleA.IdAticle))
                     {
                         return NotFound();
                     }
@@ -114,7 +121,7 @@ namespace UraniaWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(article);
+            return View(articleA);
         }
 
         // GET: Articles/Delete/5

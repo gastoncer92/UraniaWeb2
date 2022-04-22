@@ -54,7 +54,7 @@ namespace UraniaWeb.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAdmin,NameAdmin,PassAdmin")] Admin admin)
+        public async Task<IActionResult> Create([Bind("IdAdmin,NameAdmin,PassAdmin")] Administrador admin)
         {
             try
             {
@@ -101,7 +101,7 @@ namespace UraniaWeb.Controllers
             }
             var admin = await _context.Admins.FirstOrDefaultAsync(a => a.IdAdmin == id);
 
-            if (await TryUpdateModelAsync<Admin>(
+            if (await TryUpdateModelAsync<Administrador>(
                 admin,
                 "",
                 a => a.NameAdmin, a => a.PassAdmin))
