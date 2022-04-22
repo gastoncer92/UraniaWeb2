@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -8,23 +9,21 @@ using System.Threading.Tasks;
 using UraniaWeb.Models;
 
 
+
 namespace UraniaWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly UraniaWebDbContext _dbContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(UraniaWebDbContext dbContext)
         {
-            _logger = logger;
+            _dbContext = dbContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            Article article = new Article();
-            IEnumerable<Article> articles = new List<Article>();
-            article.Articles = articles;
-            return View(article);
+            return View(await _dbContext.Articles.ToListAsync());
         }
 
         public IActionResult Privacy()

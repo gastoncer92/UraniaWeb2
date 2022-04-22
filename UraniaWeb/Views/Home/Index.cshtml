@@ -1,4 +1,4 @@
-﻿@model UraniaWeb.Models.Article
+﻿@model IEnumerable<UraniaWeb.Models.Article>
 @{
     
     ViewData["Title"] = "Home Page";
@@ -9,11 +9,11 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-@if (Model.Articles.Count()> 0)
+@if (Model.Count()> 0)
 {
-    @foreach (var item in Model.Articles)
+    @foreach (var item in Model)
     {
-        <p>kkk</p>
+        <p>@Html.DisplayFor(modelItem => item.TitleArticle)</p>
     }
 
 }
@@ -21,5 +21,3 @@ else
 {
     <p>No existen articulos</p>
 }
-
-
