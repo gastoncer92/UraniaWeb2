@@ -1,5 +1,6 @@
 ﻿@model UraniaWeb.Models.Article
 @{
+    
     ViewData["Title"] = "Home Page";
 }
 
@@ -8,9 +9,17 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-<!--ARTICULOS-->
-@foreach (var item in Model)
+@if (Model.Articles.Count()> 0)
 {
-    <p>@item.TitleArticle</p>
+    @foreach (var item in Model.Articles)
+    {
+        <p>kkk</p>
+    }
+
 }
+else
+{
+    <p>No existen articulos</p>
+}
+
 

@@ -19,7 +19,7 @@ namespace UraniaWeb.Migrations
                 .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("UraniaWeb.Models.Admin", b =>
+            modelBuilder.Entity("UraniaWeb.Models.Administrador", b =>
                 {
                     b.Property<int>("IdAdmin")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,7 @@ namespace UraniaWeb.Migrations
 
                     b.HasKey("IdAdmin");
 
-                    b.ToTable("Admin");
+                    b.ToTable("Administrador");
                 });
 
             modelBuilder.Entity("UraniaWeb.Models.Article", b =>
@@ -45,6 +45,9 @@ namespace UraniaWeb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ArticleIdAticle")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateCreation")
                         .HasColumnType("datetime2");
@@ -67,6 +70,8 @@ namespace UraniaWeb.Migrations
 
                     b.HasKey("IdAticle");
 
+                    b.HasIndex("ArticleIdAticle");
+
                     b.ToTable("Article");
                 });
 
@@ -87,6 +92,18 @@ namespace UraniaWeb.Migrations
                     b.HasKey("IdSlider");
 
                     b.ToTable("Slider");
+                });
+
+            modelBuilder.Entity("UraniaWeb.Models.Article", b =>
+                {
+                    b.HasOne("UraniaWeb.Models.Article", null)
+                        .WithMany("Articles")
+                        .HasForeignKey("ArticleIdAticle");
+                });
+
+            modelBuilder.Entity("UraniaWeb.Models.Article", b =>
+                {
+                    b.Navigation("Articles");
                 });
 #pragma warning restore 612, 618
         }

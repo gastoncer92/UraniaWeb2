@@ -8,7 +8,7 @@ namespace UraniaWeb.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Admin",
+                name: "Administrador",
                 columns: table => new
                 {
                     IdAdmin = table.Column<int>(type: "int", nullable: false)
@@ -18,7 +18,7 @@ namespace UraniaWeb.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Admin", x => x.IdAdmin);
+                    table.PrimaryKey("PK_Administrador", x => x.IdAdmin);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,11 +32,18 @@ namespace UraniaWeb.Migrations
                     DateCreation = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UrlImagen1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UrlImagen2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UrlSound1 = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UrlSound1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArticleIdAticle = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Article", x => x.IdAticle);
+                    table.ForeignKey(
+                        name: "FK_Article_Article_ArticleIdAticle",
+                        column: x => x.ArticleIdAticle,
+                        principalTable: "Article",
+                        principalColumn: "IdAticle",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -52,12 +59,17 @@ namespace UraniaWeb.Migrations
                 {
                     table.PrimaryKey("PK_Slider", x => x.IdSlider);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Article_ArticleIdAticle",
+                table: "Article",
+                column: "ArticleIdAticle");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Admin");
+                name: "Administrador");
 
             migrationBuilder.DropTable(
                 name: "Article");

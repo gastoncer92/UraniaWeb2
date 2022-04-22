@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 namespace UraniaWeb.Models
 {
-    public class Admin
+    public class Administrador
     {
         [Key]
         public int IdAdmin { get; set; }
