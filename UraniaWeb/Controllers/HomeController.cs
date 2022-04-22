@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using UraniaWeb.Models;
-using UraniaWeb.Models.ViewModels;
+
 
 namespace UraniaWeb.Controllers
 {
@@ -21,10 +21,10 @@ namespace UraniaWeb.Controllers
 
         public IActionResult Index()
         {
-            HomeVM homevm = new();
-            IEnumerable<Article> lista = new List<Article>();
-            homevm.ListaDeArticulos = lista;
-            return View(homevm);
+            Article article = new Article();
+            IEnumerable<Article> articles = new List<Article>();
+            article.Articles = articles;
+            return View(article);
         }
 
         public IActionResult Privacy()

@@ -24,6 +24,8 @@ namespace UraniaWeb.Models
         public string UrlImagen2 { get; set; }
         [DisplayFormat(NullDisplayText = "")]
         public string UrlSound1 { get; set; }
+
+        public IEnumerable<Article> Articles { get; set; }
     }
 
 }
