@@ -1,17 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using UraniaWeb.Models;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace UraniaWeb.Controllers
 {
     public class ArticlesController : Controller
     {
         private readonly UraniaWebDbContext _context;
+
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
         public ArticlesController(UraniaWebDbContext context)
         {
@@ -48,15 +50,34 @@ namespace UraniaWeb.Controllers
             return View();
         }
 
-        // POST: Articles/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article article)
+        public async Task<IActionResult> Create([Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article article, DateTime dateTime)
         {
             if (ModelState.IsValid)
             {
+                string primaryPath = _hostingEnvironment.WebRootPath;
+                var file = HttpContext.Request.Form.Files;
+
+                if (article.article.IdAticle == 0)
+                {
+                    string nameFile = Guid.NewGuid().ToString();
+                    var subidas = Path.Combine(primaryPath, @"imagenes\articulos");
+                    var extension = Path.GetExtension(file[0].FileName);
+                    
+
+                    using (var fileStream = new FileStream(Path.Combine(subidas, nameFile + extension), FileMode.Create))
+                    {
+                        file[0].CopyTo(fileStream); 
+                    }
+                    article.article.UrlImagen1 = @"\imagenes\articulos\" + primaryPath + extension;
+                    
+
+                    _context.Articles.Add(article.article);
+                    _context.SaveChanges();
+                }
+
                 article.DateCreation = DateTime.Now;
                 _context.Add(article);
                 await _context.SaveChangesAsync();
@@ -81,9 +102,7 @@ namespace UraniaWeb.Controllers
             return View(article);
         }
 
-        // POST: Articles/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         

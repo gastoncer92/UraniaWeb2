@@ -27,6 +27,8 @@ namespace UraniaWeb.Models
         public string UrlSound1 { get; set; }
 
         public IEnumerable<Article> Articles { get; set; }
+
+        public Article article { get; set; }
     }
 
 }
