@@ -75,19 +75,22 @@ namespace UraniaWeb.Controllers
                     string nombreArchivo3 = Guid.NewGuid().ToString(); //audio 1
 
                     var subidas = Path.Combine(rutaPrincipal, @"archivos\articulos");
-                    var extension = Path.GetExtension(archivos[0].FileName);
+                    var extension1 = Path.GetExtension(articulo.UrlImagen1);
+                    var extension2 = Path.GetExtension(articulo.UrlImagen2);
+                    var extension3 = Path.GetExtension(articulo.UrlSound1);
+                    
 
-                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo1 + extension), FileMode.Create))
+                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo1 + extension1), FileMode.Create))
                     {
                         archivos[0].CopyTo(fileStreams);
                     }
 
-                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo2 + extension), FileMode.Create))
+                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo2 + extension2), FileMode.Create))
                     {
                         archivos[0].CopyTo(fileStreams);
                     }
 
-                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo3 + extension), FileMode.Create))
+                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo3 + extension3), FileMode.Create))
                     {
                         archivos[0].CopyTo(fileStreams);
                     }
@@ -100,8 +103,8 @@ namespace UraniaWeb.Controllers
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
+                
             }
-
             return View();
         }
 
