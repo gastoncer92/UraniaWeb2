@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="TitleArticle" class="control-label">Titulo de artículo</label>
@@ -41,6 +41,16 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+        @section Scripts{ 
+    <script src="https://cdn.tiny.cloud/1/mgr52he9cv624d916lggsy1tsum1t0x3dwwiewf3twxde9d8/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugings: 'lists',
+            menubar: 'file edit format'
+        });
+    </script>
+}
     </div>
 </div>
 

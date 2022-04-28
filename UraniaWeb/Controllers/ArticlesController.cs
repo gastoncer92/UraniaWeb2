@@ -11,13 +11,16 @@ namespace UraniaWeb.Controllers
 {
     public class ArticlesController : Controller
     {
+        private const string Format = "dd MMM yyy";
         private readonly UraniaWebDbContext _context;
 
         private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public ArticlesController(UraniaWebDbContext context)
+
+        public ArticlesController(UraniaWebDbContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostEnvironment;
         }
 
         // GET: Articles
@@ -50,41 +53,89 @@ namespace UraniaWeb.Controllers
             return View();
         }
 
+        
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article article, DateTime dateTime)
+        [AutoValidateAntiforgeryToken]
+        public IActionResult Create(Article articulo)
         {
             if (ModelState.IsValid)
             {
-                string primaryPath = _hostingEnvironment.WebRootPath;
-                var file = HttpContext.Request.Form.Files;
+                string rutaPrincipal = _hostingEnvironment.WebRootPath;
+                var archivos = HttpContext.Request.Form.Files;
 
-                if (article.article.IdAticle == 0)
+                if (articulo.IdAticle == 0)
                 {
-                    string nameFile = Guid.NewGuid().ToString();
-                    var subidas = Path.Combine(primaryPath, @"imagenes\articulos");
-                    var extension = Path.GetExtension(file[0].FileName);
-                    
+                    // Creamos imagen
+                    string nombreArchivo1 = Guid.NewGuid().ToString(); //imagen 1
+                    string nombreArchivo2 = Guid.NewGuid().ToString(); //imagen 2
+                    string nombreArchivo3 = Guid.NewGuid().ToString(); //audio 1
 
-                    using (var fileStream = new FileStream(Path.Combine(subidas, nameFile + extension), FileMode.Create))
+                    var subidas = Path.Combine(rutaPrincipal, @"archivos\articulos");
+                    var extension = Path.GetExtension(archivos[0].FileName);
+
+                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo1 + extension), FileMode.Create))
                     {
-                        file[0].CopyTo(fileStream); 
+                        archivos[0].CopyTo(fileStreams);
                     }
-                    article.article.UrlImagen1 = @"\imagenes\articulos\" + primaryPath + extension;
-                    
 
-                    _context.Articles.Add(article.article);
+                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo2 + extension), FileMode.Create))
+                    {
+                        archivos[0].CopyTo(fileStreams);
+                    }
+
+                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo3 + extension), FileMode.Create))
+                    {
+                        archivos[0].CopyTo(fileStreams);
+                    }
+
+                    articulo.UrlImagen1 = @"\archivos\articulos" + nombreArchivo1 + extension;
+                    articulo.UrlImagen2 = @"\archivos\articulos" + nombreArchivo2 + extension;
+                    articulo.UrlSound1 = @"\archivos\articulos" + nombreArchivo3 + extension;
+
+                    articulo.DateCreation = DateTime.Now('dd MMM yyy');
                     _context.SaveChanges();
+                    return RedirectToAction(nameof(Index));
                 }
-
-                article.DateCreation = DateTime.Now;
-                _context.Add(article);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
             }
-            return View(article);
+
+            return View();
         }
+
+
+        //        [HttpPost]
+        //      [ValidateAntiForgeryToken]
+        //    public async Task<IActionResult> Create(int id, [Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")]  Article articulo, DateTime dateTime)
+        //       {
+        //         if (ModelState.IsValid)
+        //       {
+        //         string primaryPath = _hostingEnvironment.WebRootPath;
+        //       var file = HttpContext.Request.Form.Files;
+        //     if (articulo.article.IdAticle != 0)
+        //   {
+        //     string namefile = guid.newguid().tostring();
+        //                    var subidas = path.combine(primarypath, @"imagenes\articulos");
+        //                    var extension = Path.GetExtension(file[0].FileName);
+        //                  
+        //
+        //                using (var fileStream = new FileStream(Path.Combine(subidas, nameFile + extension), FileMode.Create))
+        //              {
+        //                file[0].CopyTo(fileStream); 
+        //          }
+        //        articulo.article.UrlImagen1 = @"\imagenes\articulos\" + primaryPath + extension;
+        //      
+        //
+        //                  _context.Articles.Add(articulo.article);
+        //                _context.SaveChanges();
+        //          }
+        //
+        //      articulo.DateCreation = DateTime.Now;
+        //        _context.Add(articulo);
+        //  await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //  }
+        //    return View(articulo);
+        //  }
 
         // GET: Articles/Edit/5
         public async Task<IActionResult> Edit(int? id)

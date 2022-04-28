@@ -19,11 +19,13 @@ namespace UraniaWeb.Models
         public DateTime DateCreation { get; set; }
         [DisplayFormat(NullDisplayText = "")]
 
-        [DataType(DataType.Upload)]
+        [DataType(DataType.Url)]
         public string UrlImagen1 { get; set; }
         [DisplayFormat(NullDisplayText = "")]
+        [DataType(DataType.Url)]
         public string UrlImagen2 { get; set; }
         [DisplayFormat(NullDisplayText = "")]
+        [DataType(DataType.Url)]
         public string UrlSound1 { get; set; }
 
         public IEnumerable<Article> Articles { get; set; }
