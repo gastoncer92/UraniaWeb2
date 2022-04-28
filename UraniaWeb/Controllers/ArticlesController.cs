@@ -29,6 +29,12 @@ namespace UraniaWeb.Controllers
             return View(await _context.Articles.ToListAsync());
         }
 
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         // GET: Articles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -48,10 +54,7 @@ namespace UraniaWeb.Controllers
         }
 
         // GET: Articles/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+     
 
         
 
@@ -93,7 +96,7 @@ namespace UraniaWeb.Controllers
                     articulo.UrlImagen2 = @"\archivos\articulos" + nombreArchivo2 + extension;
                     articulo.UrlSound1 = @"\archivos\articulos" + nombreArchivo3 + extension;
 
-                    articulo.DateCreation = DateTime.Now('dd MMM yyy');
+                    articulo.DateCreation = DateTime.Now;
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
