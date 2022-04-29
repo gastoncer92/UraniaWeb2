@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using UraniaWeb.Models;
+using UraniaWeb.Models.ViewModels;
 
 
 
@@ -16,14 +17,25 @@ namespace UraniaWeb.Controllers
     {
         private readonly UraniaWebDbContext _dbContext;
 
+        public HomeVM HomeVM { get; private set; }
+
         public HomeController(UraniaWebDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+         //   return View(await _dbContext.Articles.ToListAsync());
+        //}
+
+        public IActionResult Index()
         {
-            return View(await _dbContext.Articles.ToListAsync());
+            HomeVM = new HomeVM()
+            {
+                //Slider = _dbContext. Sliders.GetAll(),
+                ListaArticulos = _dbContext.Articles.G
+            };
         }
 
         public IActionResult Privacy()
@@ -36,5 +48,9 @@ namespace UraniaWeb.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
+
     }
 }

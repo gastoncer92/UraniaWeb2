@@ -28,9 +28,14 @@ namespace UraniaWeb.Models
         [DataType(DataType.Url)]
         public string UrlSound1 { get; set; }
 
-        public IEnumerable<Article> Articles { get; set; }
+        //public IEnumerable<Article> Articles { get; set; }
 
         public Article article { get; set; }
+
+
+
+        
     }
+    
 
 }
