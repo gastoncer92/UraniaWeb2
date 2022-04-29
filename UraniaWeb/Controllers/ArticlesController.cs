@@ -75,9 +75,9 @@ namespace UraniaWeb.Controllers
                     string nombreArchivo3 = Guid.NewGuid().ToString(); //audio 1
 
                     var subidas = Path.Combine(rutaPrincipal, @"archivos\articulos");
-                    var extension1 = Path.GetExtension(articulo.UrlImagen1);
-                    var extension2 = Path.GetExtension(articulo.UrlImagen2);
-                    var extension3 = Path.GetExtension(articulo.UrlSound1);
+                    var extension1 = Path.GetExtension(archivos[0].FileName);
+                    var extension2 = Path.GetExtension(archivos[1].FileName);
+                    var extension3 = Path.GetExtension(archivos[2].FileName);
                     
 
                     using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo1 + extension1), FileMode.Create))
@@ -95,9 +95,9 @@ namespace UraniaWeb.Controllers
                         archivos[0].CopyTo(fileStreams);
                     }
 
-                    articulo.UrlImagen1 = @"\archivos\articulos" + nombreArchivo1 + extension;
-                    articulo.UrlImagen2 = @"\archivos\articulos" + nombreArchivo2 + extension;
-                    articulo.UrlSound1 = @"\archivos\articulos" + nombreArchivo3 + extension;
+                    articulo.UrlImagen1 = @"\archivos\articulos" + nombreArchivo1 + extension1;
+                    articulo.UrlImagen2 = @"\archivos\articulos" + nombreArchivo2 + extension2;
+                    articulo.UrlSound1 = @"\archivos\articulos" + nombreArchivo3 + extension3;
 
                     articulo.DateCreation = DateTime.Now;
                     _context.SaveChanges();
@@ -163,9 +163,9 @@ namespace UraniaWeb.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public async Task<IActionResult> Edit(int id, [Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article article)
+        public async Task<IActionResult> Edit(int id, [Bind("IdAticle,TitleArticle,DescritionArticle,DateCreation,UrlImagen1,UrlImagen2,UrlSound1")] Article article1)
         {
-            if (id != article.IdAticle)
+            if (id != article1.IdAticle)
             {
                 return NotFound();
             }
@@ -174,12 +174,12 @@ namespace UraniaWeb.Controllers
             {
                 try
                 {
-                    _context.Update(article);
+                    _context.Update(article1);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ArticleExists(article.IdAticle))
+                    if (!ArticleExists(article1.IdAticle))
                     {
                         return NotFound();
                     }
@@ -190,7 +190,7 @@ namespace UraniaWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(article);
+            return View(article1);
         }
 
         // GET: Articles/Delete/5
