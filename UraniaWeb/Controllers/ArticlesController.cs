@@ -70,38 +70,77 @@ namespace UraniaWeb.Controllers
                 if (articulo.IdAticle == 0)
                 {
                     // Creamos imagen
+                    
                     string nombreArchivo1 = Guid.NewGuid().ToString(); //imagen 1
                     string nombreArchivo2 = Guid.NewGuid().ToString(); //imagen 2
                     string nombreArchivo3 = Guid.NewGuid().ToString(); //audio 1
 
                     var subidas = Path.Combine(rutaPrincipal, @"archivos\articulos");
-                    var extension1 = Path.GetExtension(archivos[0].FileName);
-                    var extension2 = Path.GetExtension(archivos[1].FileName);
-                    var extension3 = Path.GetExtension(archivos[2].FileName);
-                    
 
-                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo1 + extension1), FileMode.Create))
+
+                    string extension1;
+                    string extension2;
+                    string extension3;
+
+
+                    ////////////////////////////
+                    try
                     {
-                        archivos[0].CopyTo(fileStreams);
-                    }
+                        extension1 = Path.GetExtension(archivos[0].FileName);
+                        using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo1 + extension1), FileMode.Create))
+                        {
+                            archivos[0].CopyTo(fileStreams);
 
-                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo2 + extension2), FileMode.Create))
+                        }
+                        articulo.UrlImagen1 = @"\archivos\articulos" + nombreArchivo1 + extension1;
+                    }
+                    catch (Exception)
                     {
-                        archivos[0].CopyTo(fileStreams);
+                        extension1 = "";
                     }
-
-                    using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo3 + extension3), FileMode.Create))
+                    ////////////////////////
+                    try
                     {
-                        archivos[0].CopyTo(fileStreams);
+                        extension2 = Path.GetExtension(archivos[1].FileName);
+                        using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo2 + extension2), FileMode.Create))
+                        {
+                            archivos[1].CopyTo(fileStreams);
+                        }
+                        articulo.UrlImagen2 = @"\archivos\articulos" + nombreArchivo2 + extension2;
                     }
-
-                    articulo.UrlImagen1 = @"\archivos\articulos" + nombreArchivo1 + extension1;
-                    articulo.UrlImagen2 = @"\archivos\articulos" + nombreArchivo2 + extension2;
-                    articulo.UrlSound1 = @"\archivos\articulos" + nombreArchivo3 + extension3;
+                    catch (Exception)
+                    {
+                        extension2 = "";
+                    }
+                    ////////////////////////
+                    try
+                    {
+                        extension3 = Path.GetExtension(archivos[2].FileName);
+                        using (var fileStreams = new FileStream(Path.Combine(subidas, nombreArchivo3 + extension3), FileMode.Create))
+                        {
+                            archivos[2].CopyTo(fileStreams);
+                        }
+                        articulo.UrlSound1= @"\archivos\articulos" + nombreArchivo3 + extension3;
+                    }
+                    catch (Exception)
+                    {
+                        extension3 = "";
+                    }
+                    ////////////////////////
 
                     articulo.DateCreation = DateTime.Now;
+                    _context.Articles.Add(articulo);
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Index));
+
+
+                    //_contenedorTrabajo.Articulo.Add(artiVM.Articulo);
+                    //_contenedorTrabajo.Save();
+
+                    //return RedirectToAction(nameof(Index));
+
+
+
                 }
                 
             }
